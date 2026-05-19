@@ -44,27 +44,35 @@ export default function SignupPage() {
     };
 
     return(
-        <main className="min-h-screen flex items-center justify-center p-4">
-            <div className="bg-white p-8 rounded-xl shadow-md w-full max-w-md">
-                <h1 className="text-2xl font-bold text-center text-emerald-600 mb-6">Criar conta</h1>
+        <main className="bg-background min-h-screen flex items-center justify-center p-4">
+            <div className="bg-background-light p-8 rounded-xl shadow-md w-full max-w-md">
+                <h1 className="text-2xl font-bold text-center text-primary mb-6">Criar conta</h1>
 
                 {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm">{error}</div>}
 
                 <form onSubmit={handleSignup} className="space-y-4">
-                    <input type="text" name="username" placeholder="Nome de usuário" required onChange={handleChange}
-                    className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                    <div className="p-[1px] rounded bg-linear-[65deg] from-purple-500 to-pink-500 shadow-lg">
+                        <input type="text" name="username" placeholder="Nome de usuário" required onChange={handleChange}
+                        className="bg-background w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-accent/50 placeholder-text-dark text-text-main" />
+                    </div>
+
+                    <div className="p-[1px] rounded bg-linear-[65deg] from-purple-500 to-pink-500 shadow-lg">                    
+                        <input type="text" name="nickname" placeholder="Apelido" required onChange={handleChange}
+                        className="bg-background w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-accent/50 placeholder-text-dark text-text-main" />
+                    </div>
+
+                    <div className="p-[1px] rounded bg-linear-[65deg] from-purple-500 to-pink-500 shadow-lg">                                         
+                        <input type="email" name="email" placeholder="Endereço de Email" required onChange={handleChange}
+                        className="bg-background w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-accent/50 placeholder-text-dark text-text-main" />
+                    </div>                    
                     
-                    <input type="text" name="nickname" placeholder="Apelido" required onChange={handleChange}
-                    className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500" />
-                    
-                    <input type="email" name="email" placeholder="Endereço de Email" required onChange={handleChange}
-                    className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500" />
-                    
-                    <input type="password" name="password" placeholder="Senha (mín. 8 caracteres)" required onChange={handleChange}
-                    className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-emerald-500" />
+                    <div className="p-[1px] rounded bg-linear-[65deg] from-purple-500 to-pink-500 shadow-lg">                          
+                        <input type="password" name="password" placeholder="Senha (mín. 8 caracteres)" required onChange={handleChange}
+                        className="bg-background w-full p-3 rounded focus:outline-none focus:ring-2 focus:ringaccent/50 placeholder-text-dark text-text-main" />
+                    </div>                       
 
                     <button type="submit" disabled={loading}
-                    className="w-full bg-emerald-600 text-white font-bold py-3 rounded hover:bg-emerald-700 transition disabled:opacity-50">
+                    className="w-full bg-primary text-white font-bold py-3 rounded hover:bg-secondary transition disabled:opacity-50">
                         {loading ? "Aguarde..." : "Cadastrar"}
                     </button>
                 </form>

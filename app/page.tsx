@@ -63,7 +63,7 @@ export default function Home() {
         
       </section>    
           <div className="relative w-full max-w-2xl mx-auto text-left z-50 py-10">
-            <div className="p-[2px] rounded-full bg-linear-[65deg] from-purple-500 to-pink-500 shadow-lg">
+            <div className="p-[1px] rounded-full bg-linear-[65deg] from-purple-500 to-pink-500 shadow-lg">
               <div className="flex bg-background-light rounded-full shadow-lg overflow-hidden p-1">
                 <input 
                   type="text" 
