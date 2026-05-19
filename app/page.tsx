@@ -52,36 +52,40 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen bg-gray-50">
-      <section className="bg-emerald-800 py-20 px-4">
+    <main className="min-h-screen bg-background">
+      <section className="bg-primary-light py-12 px-4">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
             Bem-vindo ao MyRecord!
           </h1>
-          
-          <div className="relative w-full max-w-2xl mx-auto text-left z-50">
-            
-            <div className="flex bg-white rounded-full shadow-lg overflow-hidden p-1">
-              <input 
-                type="text" 
-                placeholder="Comece a digitar o nome da música..." 
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="flex-grow px-6 py-3 text-gray-700 focus:outline-none bg-transparent"
-              />
-              {loading && (
-                <div className="px-4 py-3 text-emerald-600 flex items-center justify-center">
-                  <span className="animate-pulse font-bold">...</span>
-                </div>
-              )}
+
+        </div>
+        
+      </section>    
+          <div className="relative w-full max-w-2xl mx-auto text-left z-50 py-10">
+            <div className="p-[2px] rounded-full bg-linear-[65deg] from-purple-500 to-pink-500 shadow-lg">
+              <div className="flex bg-background-light rounded-full shadow-lg overflow-hidden p-1">
+                <input 
+                  type="text" 
+                  placeholder="Comece a digitar o nome da música..." 
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="flex-grow px-6 py-3 text-text-main focus:outline-none bg-transparent"
+                />
+                {loading && (
+                  <div className="px-4 py-3 text-emerald-600 flex items-center justify-center">
+                    <span className="animate-pulse font-bold">...</span>
+                  </div>
+                )}
+              </div>
             </div>
             {showDropdown && results.length > 0 && (
-              <ul className="absolute top-full left-0 w-full mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden divide-y divide-gray-100">
+              <ul className="absolute top-full left-0 w-full mt-2 bg-background-light rounded-xl shadow-2xl border border-background overflow-hidden divide-y divide-background-light">
                 {results.map((track) => (
                   <li 
                     key={track.spotifyId} 
                     onClick={() => handleSelectTrack(track)}
-                    className="flex items-center p-3 hover:bg-emerald-50 cursor-pointer transition-colors"
+                    className="flex items-center p-3 hover:bg-background-bright cursor-pointer transition-colors"
                   >
                     <img 
                       src={track.albumImage} 
@@ -89,8 +93,8 @@ export default function Home() {
                       className="w-12 h-12 rounded object-cover mr-4 shadow-sm"
                     />
                     <div className="flex-grow truncate">
-                      <p className="font-bold text-gray-800 truncate">{track.title}</p>
-                      <p className="text-sm text-gray-500 truncate">{track.artist}</p>
+                      <p className="font-bold text-text-main truncate">{track.title}</p>
+                      <p className="text-sm text-text-muted truncate">{track.artist}</p>
                     </div>
                   </li>
                 ))}
@@ -103,9 +107,7 @@ export default function Home() {
               </div>
             )}
           </div>
-
-        </div>
-      </section>
+            
     </main>
   );
 }
