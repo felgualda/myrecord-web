@@ -2,13 +2,18 @@
 
 import { useState, useEffect } from "react";
 import SongCard from "@/components/SongCard";
+import HomePostCard from "@/components/HomePostCard";
+import { SpotifyTrack } from "@/types/spotify";
+import CreatePostModal from "@/components/CreatePostModal";
 
-interface SpotifyTrack {
-  spotifyId: string;
-  title: string;
-  artist: string;
-  albumImage: string;
-  previewUrl: string | null;
+interface FeedPost {
+  id: string | number;
+  song: SpotifyTrack;
+  user: {
+    username: string;
+    nickname: string;
+    profilePic?: string;
+  }
 }
 
 export default function Home() {
@@ -16,6 +21,34 @@ export default function Home() {
   const [results, setResults] = useState<SpotifyTrack[]>([]);
   const [loading, setLoading] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
+  const [selectedTrack, setSelectedTrack] = useState<SpotifyTrack | null>(null)
+  const [loadingPost, setLoadingPost] = useState(false)
+
+  const [posts, setPosts] = useState<FeedPost[]>([]);
+  const [page, setPage] = useState(1);
+  const [hasMore, setHasMore] = useState(true);
+  const [loadingFeed, setLoadingFeed] = useState(false);
+
+  const fetchFeed = async (pageNumber: number) => {
+    setLoadingFeed(true);
+    try {
+      const response = await fetch(`${process.env['NEXT_PUBLIC_API_URL']}/api/records?page=${pageNumber}`);
+      if (response.ok) {
+        const data = await response.json();
+        
+        setPosts(prev => pageNumber === 1 ? data.records : [...prev, ...data.records]);
+        setHasMore(data.hasMore);
+      }
+    } catch (error) {
+      console.error("Erro ao buscar o feed:", error);
+    } finally {
+      setLoadingFeed(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchFeed(1);
+  }, []);
 
   useEffect(() => {
     if (!searchQuery.trim()) {
@@ -39,31 +72,86 @@ export default function Home() {
       } finally {
         setLoading(false);
       }
-    }, 500);
+    }, 300);
 
     return () => clearTimeout(delayDebounceFn);
   }, [searchQuery]);
 
   const handleSelectTrack = (track: SpotifyTrack) => {
     setShowDropdown(false);
-    setSearchQuery("");
-    
-    //adicionar
+    setSelectedTrack(track);
+  };
+
+const handleConfirmPost = async (postText: string) => {
+    if (!selectedTrack) return;
+
+    if (loadingPost) return;
+    setLoadingPost(true)
+
+    try {
+      const token = localStorage.getItem("myrecord_token");
+
+      if (!token) {
+        alert("Sessão expirada. Refaça o login.");
+        return;
+      }
+
+      const payload = {
+        spotifyId: selectedTrack.spotifyId,
+        title: selectedTrack.title,
+        artist: selectedTrack.artist,
+        albumImage: selectedTrack.albumImage,
+        previewUrl: selectedTrack.previewUrl,
+      };
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/records`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}` 
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error("Erro ao salvar a música");
+      }
+
+      console.log("Post criado com sucesso!");
+
+      setPage(1);
+      fetchFeed(1);
+      
+    } catch (error) {
+      console.error("Erro no fetch:", error);
+      alert("Houve um erro ao criar o post.");
+    } finally {
+      setLoadingPost(false)
+      setSelectedTrack(null);
+      setSearchQuery("");
+    }
+  };
+
+  const handleLoadMore = () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+    fetchFeed(nextPage);
   };
 
   return (
     <main className="min-h-screen bg-background">
       <section className="bg-primary-light py-12 px-4">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h1 className="text-4xl md:text-5xl text-white mb-6">
             Bem-vindo ao MyRecord!
           </h1>
 
         </div>
         
       </section>    
+      
           <div className="relative w-full max-w-2xl mx-auto text-left z-50 pt-15">
-            <div className="p-[1px] rounded-full bg-linear-[65deg] from-purple-500 to-pink-500 shadow-purple-500/50 shadow-[0_0_120px_rgba(168,85,247,0.7)]">
+            <div className="p-[1px] rounded-full bg-linear-[65deg] from-purple-500 to-pink-500 shadow-purple-500/20 shadow-[0_0_120px_rgba(168,85,247,0.7)]">
               <div className="flex bg-background-light rounded-full shadow-lg overflow-hidden p-1">
                 <input 
                   type="text" 
@@ -79,7 +167,9 @@ export default function Home() {
                 )}
               </div>
             </div>
-            {showDropdown && results.length > 0 && (
+
+            <div className="relative w-full max-w-2xl mx-auto text-left z-50">
+              {showDropdown && results.length > 0 && (
               <ul className="absolute top-full left-0 w-full mt-2 bg-background-light rounded-xl shadow-2xl border border-background overflow-hidden divide-y divide-background-light">
                 {results.map((track) => (
                   <li 
@@ -100,6 +190,7 @@ export default function Home() {
                 ))}
               </ul>
             )}
+            </div>
             
             {showDropdown && results.length === 0 && !loading && (
               <div className="absolute top-full left-0 w-full mt-2 bg-white rounded-xl shadow-2xl border border-gray-100 p-4 text-center text-gray-500">
@@ -107,7 +198,49 @@ export default function Home() {
               </div>
             )}
           </div>
-            
+
+          {selectedTrack && (
+        <CreatePostModal 
+          track={selectedTrack} 
+          onClose={() => setSelectedTrack(null)} 
+          onConfirm={handleConfirmPost} 
+          loading={loadingPost}
+        />
+        )}
+
+      <div className="relative w-full max-w-2xl mx-auto text-left pt-15 flex flex-col gap-6">
+        {posts.map((post) => (
+          <HomePostCard 
+            key={post.id}
+            username={post.user.username} 
+            nickname={post.user.nickname} 
+            user_pfp={post.user.profilePic || ""} 
+            song_title={post.song.title} 
+            song_artist={post.song.artist} 
+            song_albumImage={post.song.albumImage} 
+            song_spotifyUrl={`https://open.spotify.com/track/${post.song.spotifyId}`}
+          />
+        ))}
+
+        {hasMore && (
+          <div className="flex justify-center mt-6">
+            <button 
+              onClick={handleLoadMore}
+              disabled={loadingFeed}
+              className="px-6 py-2 rounded-full border border-purple-500 text-purple-400 hover:bg-purple-500/10 transition-colors disabled:opacity-50"
+            >
+              {loadingFeed ? "Carregando..." : "Carregar mais posts"}
+            </button>
+          </div>
+        )}
+
+        {!hasMore && posts.length > 0 && (
+          <p className="text-center text-text-muted mt-6 pb-15">
+            Não há mais posts para carregar.
+          </p>
+        )}
+      </div>
+
     </main>
   );
 }
