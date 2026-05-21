@@ -5,16 +5,7 @@ import SongCard from "@/components/SongCard";
 import HomePostCard from "@/components/HomePostCard";
 import { SpotifyTrack } from "@/types/spotify";
 import CreatePostModal from "@/components/CreatePostModal";
-
-interface FeedPost {
-  id: string | number;
-  song: SpotifyTrack;
-  user: {
-    username: string;
-    nickname: string;
-    profilePic?: string;
-  }
-}
+import { FeedPost } from "@/types/feedpost";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -28,6 +19,8 @@ export default function Home() {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const [loadingFeed, setLoadingFeed] = useState(false);
+
+  const [expandedPost, setExpandedPost] = useState<number | null>(null);
 
   const fetchFeed = async (pageNumber: number) => {
     setLoadingFeed(true);
@@ -138,6 +131,14 @@ const handleConfirmPost = async (postText: string) => {
     fetchFeed(nextPage);
   };
 
+  const handlePostClick = (post_id: number) => {
+    if(expandedPost === post_id) {
+      setExpandedPost(null)
+    } else {
+      setExpandedPost(post_id);
+    }
+  }
+
   return (
     <main className="min-h-screen bg-background">
       <section className="bg-primary-light py-12 px-4">
@@ -219,6 +220,9 @@ const handleConfirmPost = async (postText: string) => {
             song_artist={post.song.artist} 
             song_albumImage={post.song.albumImage} 
             song_spotifyUrl={`https://open.spotify.com/track/${post.song.spotifyId}`}
+            comment="Que música extraordináriamente boa, estou abismado!"
+            isExpanded= {(expandedPost === post.id)}
+            onClickEvent={() => handlePostClick(post.id)}
           />
         ))}
 

@@ -63,7 +63,7 @@ export default function LoginPage() {
                 </form>
 
                 <p className="text-center text-sm text-gray-500 mt-4">
-                    Não tem conta? <a href="/" className="text-primary hover:underline">Cadastre-se</a>
+                    Não tem conta? <a href="/signup" className="text-primary hover:underline">Cadastre-se</a>
                 </p>
             </div>
         </main>
