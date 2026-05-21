@@ -93,6 +93,7 @@ const handleConfirmPost = async (postText: string) => {
         spotifyId: selectedTrack.spotifyId,
         title: selectedTrack.title,
         artist: selectedTrack.artist,
+        comment: postText,
         albumImage: selectedTrack.albumImage,
         previewUrl: selectedTrack.previewUrl,
       };
@@ -220,7 +221,7 @@ const handleConfirmPost = async (postText: string) => {
             song_artist={post.song.artist} 
             song_albumImage={post.song.albumImage} 
             song_spotifyUrl={`https://open.spotify.com/track/${post.song.spotifyId}`}
-            comment="Que música extraordináriamente boa, estou abismado!"
+            comment={post.comment}
             isExpanded= {(expandedPost === post.id)}
             onClickEvent={() => handlePostClick(post.id)}
           />

@@ -23,7 +23,7 @@ export default function HomePostCard({post_id, nickname, username, user_pfp, son
         <div 
             className={`relative flex flex-col w-full aspect-square rounded-2xl shadow-sm overflow-hidden min-h-[5rem] transition-all duration-500 ease-in-out origin-top`}
             style={{ 
-                minHeight: '5rem',
+                minHeight: '7rem',
                 maxHeight: isExpanded ? 'min(100cqw, 400px)' : '5rem' 
             }}
             onClick={() => onClickEvent(post_id)}
@@ -61,12 +61,16 @@ export default function HomePostCard({post_id, nickname, username, user_pfp, son
                     isExpanded ? "opacity-100 delay-200" : "opacity-0"
                 }`}
             >
-                {comment && (
-                    <div className="pt-10">
+                {comment ? (
+                    <div className="pt-20">
                         <p className="text-text-main text-sm italic border-gray-400/50 pl-3 text-l"><b>{`${username}`}</b> disse...</p>
-                        <p className="text-text-main text-sm italic border-gray-400/50 pl-3 text-xl">
+                        <p className="text-text-main break-words text-sm italic border-gray-400/50 pb-3 px-3 text-xl">
                             "{comment}"
                         </p>
+                    </div>
+                ) : (
+                    <div className="pt-20">
+                        <p className="text-text-main text-sm italic border-gray-400/50 pl-3 text-l"><b>{`${username}`}</b> escutou essa música...</p>
                     </div>
                 )}
             </div>
