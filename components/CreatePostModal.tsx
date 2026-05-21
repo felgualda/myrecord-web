@@ -46,14 +46,21 @@ export default function CreatePostModal({track, onClose, onConfirm, loading}: Cr
             </div>
           </div>
 
-          <textarea
-            value={postText}
-            onChange={(e) => setPostText(e.target.value)}
-            placeholder="O que você está achando dessa música?"
-            className="w-full h-24 bg-transparent border border-gray-600/50 rounded-xl p-3 text-text-main placeholder-gray-500 focus:outline-none focus:border-purple-500 resize-none transition-colors"
-            maxLength={280}
-            autoFocus
-          />
+          <div className="flex flex-col gap-2">
+              <textarea
+                  value={postText}
+                  onChange={(e) => setPostText(e.target.value)}
+                  placeholder="O que você está achando dessa música?"
+                  className="w-full h-24 bg-transparent border border-gray-600/50 rounded-xl p-3 text-text-main placeholder-gray-500 focus:outline-none focus:border-purple-500 resize-none transition-colors"
+                  maxLength={280}
+                  autoFocus
+              />
+              
+              {/* Adicionado: Contador de caracteres alinhado à direita */}
+              <span className={`text-xs text-right ${postText.length >= 270 ? 'text-red-400' : 'text-text-muted'}`}>
+                  {postText.length}/280
+              </span>
+          </div>
 
           <div className="flex justify-end gap-3 pt-2">
             <button
