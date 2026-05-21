@@ -150,7 +150,7 @@ const handleConfirmPost = async (postText: string) => {
         
       </section>    
       
-          <div className="relative w-full max-w-2xl mx-auto text-left z-50 pt-15">
+          <div className="relative w-full max-w-2xl mx-auto text-left z-50 pt-15 px-5">
             <div className="p-[1px] rounded-full bg-linear-[65deg] from-purple-500 to-pink-500 shadow-purple-500/20 shadow-[0_0_120px_rgba(168,85,247,0.7)]">
               <div className="flex bg-background-light rounded-full shadow-lg overflow-hidden p-1">
                 <input 
@@ -223,11 +223,11 @@ const handleConfirmPost = async (postText: string) => {
         ))}
 
         {hasMore && (
-          <div className="flex justify-center mt-6">
+          <div className="flex justify-center mt-6 pb-15">
             <button 
               onClick={handleLoadMore}
               disabled={loadingFeed}
-              className="px-6 py-2 rounded-full border border-purple-500 text-purple-400 hover:bg-purple-500/10 transition-colors disabled:opacity-50"
+              className="px-6 py-2 rounded-full border border-purple-500 text-purple-400 hover:bg-purple-500/10 transition-colors disabled:opacity-50 "
             >
               {loadingFeed ? "Carregando..." : "Carregar mais posts"}
             </button>
