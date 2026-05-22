@@ -6,6 +6,7 @@ import HomePostCard from "@/components/HomePostCard";
 import { SpotifyTrack } from "@/types/spotify";
 import CreatePostModal from "@/components/CreatePostModal";
 import { FeedPost } from "@/types/feedpost";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -140,15 +141,37 @@ const handleConfirmPost = async (postText: string) => {
     }
   }
 
+  const router = useRouter();
+
   return (
     <main className="min-h-screen bg-background">
-      <section className="bg-primary-light py-12 px-4">
+      <section className="relative flex bg-primary-light py-12 px-4">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl text-white mb-6">
             Bem-vindo ao MyRecord!
           </h1>
 
         </div>
+
+        <button 
+          onClick={() => {
+            const username = localStorage.getItem("myrecord_username");
+
+            if (username) {
+              router.push(`/user/${username}`);
+            } else {
+              router.push("/login"); 
+            }
+        
+          }} 
+          className="absolute top-6 right-6 md:top-8 md:right-10 transition-transform hover:scale-105"
+        >
+          <img 
+            src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" 
+            alt="Foto de perfil" 
+            className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white/20 object-cover shadow-md"
+          />
+        </button>
         
       </section>    
       
