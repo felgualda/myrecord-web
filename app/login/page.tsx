@@ -29,6 +29,7 @@ export default function LoginPage() {
             }
 
             localStorage.setItem("myrecord_token", data.token);
+            localStorage.setItem("myrecord_username", data.username);
 
             router.push("/");
         } catch (err: any) {
