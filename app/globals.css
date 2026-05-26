@@ -13,3 +13,11 @@
   --color-text-muted: #9c9c9c;
   --color-text-dark: #454545;
 }
+
+.spinner-svg {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
