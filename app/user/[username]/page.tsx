@@ -61,9 +61,14 @@ export default function UserProfile() {
             }
 
             try {
+                const token = localStorage.getItem("myrecord_token");
+
                 const response = await fetch(`${process.env['NEXT_PUBLIC_API_URL']}/api/users/${profileUsername}`, {
                     method: "GET",
-                    headers: { "Content-Type": "application/json" },
+                    headers: { 
+                      "Content-Type": "application/json",
+                      ...(token && {"Authorization": `Bearer ${token}` }) 
+                     },
                 });
 
                 const data = await response.json();
@@ -71,6 +76,8 @@ export default function UserProfile() {
                 if(!response.ok) {
                     throw new Error(data.error || "Erro ao acessar dados do perfil.");
                 }
+
+                setFollowing(data.isFollowing);
 
                 setProfileData(data)
             } catch (error) {
