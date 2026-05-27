@@ -23,6 +23,9 @@ export default function Home() {
 
   const [expandedPost, setExpandedPost] = useState<number | null>(null);
 
+  const profilePicture = localStorage.getItem("myrecord_picture");
+
+
   const fetchFeed = async (pageNumber: number) => {
     setLoadingFeed(true);
     try {
@@ -167,7 +170,7 @@ const handleConfirmPost = async (postText: string) => {
           className="absolute top-6 right-6 md:top-8 md:right-10 transition-transform hover:scale-105"
         >
           <img 
-            src="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original" 
+            src={ profilePicture !== "undefined" ? profilePicture : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"} 
             alt="Foto de perfil" 
             className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white/20 object-cover shadow-md"
           />
@@ -239,7 +242,7 @@ const handleConfirmPost = async (postText: string) => {
             key={post.id}
             username={post.user.username} 
             nickname={post.user.nickname} 
-            user_pfp={post.user.profilePic || ""} 
+            user_pfp={post.user.picture || ""} 
             song_title={post.song.title} 
             song_artist={post.song.artist} 
             song_albumImage={post.song.albumImage} 

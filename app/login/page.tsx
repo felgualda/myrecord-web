@@ -31,6 +31,9 @@ export default function LoginPage() {
             localStorage.setItem("myrecord_token", data.token);
             localStorage.setItem("myrecord_username", data.username);
 
+            console.log(data.picture)
+            localStorage.setItem("myrecord_picture", data.picture);
+
             router.push("/");
         } catch (err: any) {
             setError(err.message);

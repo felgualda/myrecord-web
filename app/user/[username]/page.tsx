@@ -1,6 +1,7 @@
 "use client";
 
 import ConfirmCard from "@/components/ConfirmCard";
+import EditProfileModal from "@/components/EditProfileModal";
 import HomePostCard from "@/components/HomePostCard";
 import { FeedPost } from "@/types/feedpost";
 import { SpotifyTrack } from "@/types/spotify";
@@ -29,6 +30,9 @@ export default function UserProfile() {
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [loadingFeed, setLoadingFeed] = useState(false);
+
+    const [updatingProfile, setUpdatingProfile] = useState(false)
+    const [loadingUpdatingProfile, setLoadingUpdatingProfile] = useState(false)
 
     const fetchUserRecords = async (pageNumber: number) => {
       try {
@@ -178,13 +182,54 @@ export default function UserProfile() {
       }
     }
 
+    const handleUpdateProfile = async (updatedData: Partial<UserProfileData>) => {
+
+      if (Object.keys(updatedData).length === 0) {
+        setUpdatingProfile(false);
+        return;
+      } 
+
+      setLoadingUpdatingProfile(true)
+
+      try {
+        const token = localStorage.getItem("myrecord_token");
+
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/updateProfile`, {
+              method: "PATCH", 
+              headers: { 
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${token}`
+              },
+              body: JSON.stringify(updatedData),
+          });
+
+          const data = await response.json();
+
+          if (!response.ok) {
+              throw new Error(data.error || data.errors?.[0] || "Erro ao atualizar perfil");
+          }
+          setProfileData((prev) => prev ? { ...prev, ...updatedData } : prev);
+
+          if (updatedData.picture) {
+            localStorage.setItem("myrecord_picture", updatedData.picture);
+          }
+
+          alert("Perfil atualizado com sucesso!");
+          setUpdatingProfile(false);
+      } catch (err: any) {
+          console.error(err);
+      } finally {
+          setLoadingUpdatingProfile(false);
+      }
+    }
+
     return (
 <main className="min-h-screen bg-background p-10">
       <div className="max-w-2xl mx-auto flex flex-col items-center">
         
         <div className="flex flex-col items-center gap-4 w-full bg-background-light p-8 rounded-2xl border border-gray-700/50">
           <img 
-            src={"https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg"} 
+            src={profileData?.picture ? profileData?.picture : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"} 
             alt="Foto de perfil"
             className="w-32 h-32 rounded-full object-cover border-4 border-purple-500"
           />
@@ -196,7 +241,7 @@ export default function UserProfile() {
 
           {isMyProfile ? (
             <div className="flex gap-4 mt-4">
-              <button className="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-full font-bold transition-colors">
+              <button onClick={() => {setUpdatingProfile(true)}} className="px-6 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-full font-bold transition-colors">
                 Editar Perfil
               </button>
             </div>
@@ -237,7 +282,7 @@ export default function UserProfile() {
             key={post.id}
             username={post.user.username} 
             nickname={post.user.nickname} 
-            user_pfp={post.user.profilePic || ""} 
+            user_pfp={post.user.picture || ""} 
             song_title={post.song.title} 
             song_artist={post.song.artist} 
             song_albumImage={post.song.albumImage} 
@@ -273,8 +318,10 @@ export default function UserProfile() {
         <ConfirmCard message={`Tem certeza que deseja parar de seguir @${profileUsername}`} onConfirm={confirmUnfollow} onClose={() => {setUnfollowAttempt(false)}} isLoading={followLoading}/>
       )}
 
-      
-
+      {updatingProfile && (
+        <EditProfileModal picture={profileData?.picture} nickname={profileData?.nickname} username={profileUsername} isLoading={loadingUpdatingProfile} onClose={() => {setUpdatingProfile(false)}} onConfirm={handleUpdateProfile}/>
+      )}
+    
     </main>
   );
 }

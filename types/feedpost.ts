@@ -7,6 +7,6 @@ export interface FeedPost {
   user: {
     username: string;
     nickname: string;
-    profilePic?: string;
+    picture?: string;
   }
 }
