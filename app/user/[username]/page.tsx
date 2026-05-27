@@ -1,5 +1,6 @@
 "use client";
 
+import ConfirmCard from "@/components/ConfirmCard";
 import { UserProfileData } from "@/types/UserProfileData";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -15,6 +16,8 @@ export default function UserProfile() {
 
     const [following, setFollowing] = useState(false);
     const [followLoading, setFollowLoading] = useState(false);
+
+    const [unfollowAttempt, setUnfollowAttempt] = useState(false);
 
     const handleFollow = async () => {
       setFollowLoading(true);
@@ -45,6 +48,43 @@ export default function UserProfile() {
         alert("Houve um erro ao seguir o usuário.");
       } finally {
         setFollowLoading(false)
+      }
+    };
+
+    const handleUnfollow = async () => {
+      setUnfollowAttempt(true);
+    }
+
+    const confirmUnfollow = async () => {
+      setFollowLoading(true);
+
+      try{
+        const token = localStorage.getItem("myrecord_token");
+
+        if (!token) {
+          alert("Sessão expirada. Refaça o login.");
+        return;
+        }
+
+        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/${profileUsername}/unfollow`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}` 
+        },
+        });
+
+        if(!response.ok) {
+          throw new Error(`Erro ao deixar de seguir ${profileUsername}`)
+        } else {
+          setFollowing(false)
+        }
+      } catch (error) {
+        console.error("Erro no fetch:", error);
+        alert("Houve um erro ao deixar de seguir o usuário.");
+      } finally {
+        setFollowLoading(false)
+        setUnfollowAttempt(false)
       }
     };
 
@@ -127,9 +167,15 @@ export default function UserProfile() {
               </div>
             ) : (
               <div>
-                <button disabled = {following} onClick={handleFollow} className={`mt-4 px-8 py-2 ${following ? "bg-background" : "bg-primary hover:bg-purple-600"} text-white rounded-full font-bold transition-colors`}>
-                {following ? "Seguindo" : "Seguir"}
-                </button>
+                {following ? (
+                  <button onClick={handleUnfollow} className={`mt-4 px-8 py-2 bg-background text-white rounded-full font-bold transition-colors`}>
+                    Seguindo
+                  </button>
+                ) : (
+                  <button onClick={handleFollow} className={`mt-4 px-8 py-2 bg-primary hover:bg-purple-600 text-white rounded-full font-bold transition-colors`}>
+                    Seguir
+                  </button>
+                )}
               </div>
             )}
             </div>
@@ -141,6 +187,11 @@ export default function UserProfile() {
         </div>
 
       </div>
+
+      {unfollowAttempt && (
+        <ConfirmCard message={`Tem certeza que deseja parar de seguir @${profileUsername}`} onConfirm={confirmUnfollow} onClose={() => {setUnfollowAttempt(false)}} isLoading={followLoading}/>
+      )}
+
     </main>
   );
 }
