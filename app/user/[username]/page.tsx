@@ -1,6 +1,9 @@
 "use client";
 
 import ConfirmCard from "@/components/ConfirmCard";
+import HomePostCard from "@/components/HomePostCard";
+import { FeedPost } from "@/types/feedpost";
+import { SpotifyTrack } from "@/types/spotify";
 import { UserProfileData } from "@/types/UserProfileData";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -18,6 +21,30 @@ export default function UserProfile() {
     const [followLoading, setFollowLoading] = useState(false);
 
     const [unfollowAttempt, setUnfollowAttempt] = useState(false);
+
+    const [selectedTrack, setSelectedTrack] = useState<SpotifyTrack | null>(null)
+    const [expandedPost, setExpandedPost] = useState<number | null>(null);
+
+    const [posts, setPosts] = useState<FeedPost[]>([]);
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+    const [loadingFeed, setLoadingFeed] = useState(false);
+
+    const fetchUserRecords = async (pageNumber: number) => {
+      try {
+        const response = await fetch(`${process.env['NEXT_PUBLIC_API_URL']}/api/users/${profileUsername}/records?page=${pageNumber}`);
+        if (response.ok) {
+          const data = await response.json();
+          
+          setPosts(prev => pageNumber === 1 ? data.records : [...prev, ...data.records]);
+          setHasMore(data.hasMore);
+        }
+      } catch (error) {
+        console.error("Erro ao buscar os records:", error);
+      } finally {
+        setLoadingFeed(false);
+      }
+    };
 
     const handleFollow = async () => {
       setFollowLoading(true);
@@ -88,6 +115,10 @@ export default function UserProfile() {
       }
     };
 
+      useEffect(() => {
+        fetchUserRecords(1);
+    }, []);
+
     useEffect(() => {
         const checkIdentityAndFetchData = async () => {
             setLoading(true);
@@ -132,6 +163,20 @@ export default function UserProfile() {
 
 
     if (loading) return <div className="text-white text-center mt-20">Carregando perfil...</div>
+
+    const handleLoadMore = () => {
+      const nextPage = page + 1;
+      setPage(nextPage);
+      fetchUserRecords(nextPage);
+    };
+
+    const handlePostClick = (post_id: number) => {
+      if(expandedPost === post_id) {
+        setExpandedPost(null)
+      } else {
+        setExpandedPost(post_id);
+      }
+    }
 
     return (
 <main className="min-h-screen bg-background p-10">
@@ -186,11 +231,49 @@ export default function UserProfile() {
           <h2 className="text-xl font-bold text-text-main mb-4">Records de {profileUsername}</h2>
         </div>
 
+        <div className="relative w-full max-w-2xl mx-auto text-left pt-4 flex flex-col gap-6">
+        {posts.map((post) => (
+          <HomePostCard 
+            key={post.id}
+            username={post.user.username} 
+            nickname={post.user.nickname} 
+            user_pfp={post.user.profilePic || ""} 
+            song_title={post.song.title} 
+            song_artist={post.song.artist} 
+            song_albumImage={post.song.albumImage} 
+            song_spotifyUrl={`https://open.spotify.com/track/${post.song.spotifyId}`}
+            comment={post.comment}
+            isExpanded= {(expandedPost === post.id)}
+            onClickEvent={() => handlePostClick(post.id)}
+          />
+        ))}
+
+        {hasMore && (
+          <div className="flex justify-center mt-6 pb-15">
+            <button 
+              onClick={handleLoadMore}
+              disabled={loadingFeed}
+              className="px-6 py-2 rounded-full border border-purple-500 text-purple-400 hover:bg-purple-500/10 transition-colors disabled:opacity-50 "
+            >
+              {loadingFeed ? "Carregando..." : "Carregar mais posts"}
+            </button>
+          </div>
+        )}
+
+        {!hasMore && posts.length > 0 && (
+          <p className="text-center text-text-muted mt-6 pb-15">
+            Não há mais posts para carregar.
+          </p>
+        )}
+      </div>
+
       </div>
 
       {unfollowAttempt && (
         <ConfirmCard message={`Tem certeza que deseja parar de seguir @${profileUsername}`} onConfirm={confirmUnfollow} onClose={() => {setUnfollowAttempt(false)}} isLoading={followLoading}/>
       )}
+
+      
 
     </main>
   );
