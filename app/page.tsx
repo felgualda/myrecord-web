@@ -23,9 +23,6 @@ export default function Home() {
 
   const [expandedPost, setExpandedPost] = useState<number | null>(null);
 
-  const profilePicture = localStorage.getItem("myrecord_picture");
-
-
   const fetchFeed = async (pageNumber: number) => {
     setLoadingFeed(true);
     try {
@@ -155,26 +152,6 @@ const handleConfirmPost = async (postText: string) => {
           </h1>
 
         </div>
-
-        <button 
-          onClick={() => {
-            const username = localStorage.getItem("myrecord_username");
-
-            if (username) {
-              router.push(`/user/${username}`);
-            } else {
-              router.push("/login"); 
-            }
-        
-          }} 
-          className="absolute top-6 right-6 md:top-8 md:right-10 transition-transform hover:scale-105"
-        >
-          <img 
-            src={ profilePicture !== "undefined" ? profilePicture : "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"} 
-            alt="Foto de perfil" 
-            className="w-10 h-10 md:w-12 md:h-12 rounded-full border-2 border-white/20 object-cover shadow-md"
-          />
-        </button>
         
       </section>    
       
