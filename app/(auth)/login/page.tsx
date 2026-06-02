@@ -23,7 +23,7 @@ export default function LoginPage() {
     }, []);
 
     if (!randomBackground) {
-        return <main className="min-h-screen bg-background-light"></main>;
+        return <main className="min-h-screen bg-background"></main>;
     }
 
     const handleLogin = async (e: React.FormEvent) => {
@@ -61,10 +61,10 @@ export default function LoginPage() {
     return (
     <main style={{ display: "flex", minHeight: "100vh", width: "100%" }}>
         
-        <div style={{ width: "40%", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: "2rem", zIndex: 10 }}
+        <div style={{ width: "40%", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: "2rem", zIndex: 10, borderRight: "2px solid rgba(255, 255, 255, 0.15)" }}
             className="bg-background shadow-2xl">
             <div className=" w-full max-w-md p-8 rounded-xl shadow-md">
-                <h1 className="text-2xl font-bold text-center text-primary mb-6">Entrar no MyRecord</h1>
+                <h1 className="text-2xl font-bold text-center text-text-main mb-6">Entrar no MyRecord</h1>
 
                 {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm">{error}</div>}
 
