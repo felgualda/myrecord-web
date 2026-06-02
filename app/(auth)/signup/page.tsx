@@ -1,10 +1,14 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { Art } from "@/types/art";
+import arts from "@/app/data/arts.json";
 
 export default function SignupPage() {
     const router = useRouter();
+
+    const [randomBackground, setRandomBackground] = useState<Art | null>(null);
 
     const [formData, setFormData] = useState({
         username: "", nickname: "", email: "", password: ""
@@ -14,6 +18,17 @@ export default function SignupPage() {
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value});
+    }
+
+    useEffect(() => {
+        const index = Math.floor(Math.random() * arts.length);
+
+        setRandomBackground(arts[index]);
+
+    }, []);
+
+    if (!randomBackground) {
+        return <main className="min-h-screen bg-background"></main>;
     }
 
     const handleSignup = async (e: React.FormEvent) => {
@@ -44,31 +59,34 @@ export default function SignupPage() {
     };
 
     return(
-        <main className="bg-background min-h-screen flex items-center justify-center p-4">
-            <div className="bg-background-light p-8 rounded-xl shadow-md w-full max-w-md">
-                <h1 className="text-2xl font-bold text-center text-primary mb-6">Criar conta</h1>
+        <main style={{ display: "flex", minHeight: "100vh", width: "100%" }}>
+        
+        <div style={{ width: "40%", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: "2rem", zIndex: 10, borderRight: "2px solid rgba(255, 255, 255, 0.15)"  }}
+            className="bg-background shadow-2xl">
+            <div className=" w-full max-w-md p-8 rounded-xl shadow-md">
+                <h1 className="text-2xl font-bold text-center text-text-main mb-6">Criar conta</h1>
 
                 {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm">{error}</div>}
 
                 <form onSubmit={handleSignup} className="space-y-4">
-                    <div className="p-[1px] rounded bg-linear-[65deg] from-purple-500 to-pink-500 shadow-lg">
+                    <div className="py-1">
                         <input type="text" name="username" placeholder="Nome de usuário" required onChange={handleChange}
-                        className="bg-background w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-accent/50 placeholder-text-dark text-text-main" />
+                        className="bg-background-light w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-accent/50 placeholder-text-dark text-text-main" />
                     </div>
 
-                    <div className="p-[1px] rounded bg-linear-[65deg] from-purple-500 to-pink-500 shadow-lg">                    
+                    <div className="py-1">                    
                         <input type="text" name="nickname" placeholder="Apelido" required onChange={handleChange}
-                        className="bg-background w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-accent/50 placeholder-text-dark text-text-main" />
+                        className="bg-background-light w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-accent/50 placeholder-text-dark text-text-main" />
                     </div>
 
-                    <div className="p-[1px] rounded bg-linear-[65deg] from-purple-500 to-pink-500 shadow-lg">                                         
+                    <div className="py-1">                                         
                         <input type="email" name="email" placeholder="Endereço de Email" required onChange={handleChange}
-                        className="bg-background w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-accent/50 placeholder-text-dark text-text-main" />
+                        className="bg-background-light w-full p-3 rounded focus:outline-none focus:ring-2 focus:ring-accent/50 placeholder-text-dark text-text-main" />
                     </div>                    
                     
-                    <div className="p-[1px] rounded bg-linear-[65deg] from-purple-500 to-pink-500 shadow-lg">                          
+                    <div className="pb-5">                          
                         <input type="password" name="password" placeholder="Senha (mín. 8 caracteres)" required onChange={handleChange}
-                        className="bg-background w-full p-3 rounded focus:outline-none focus:ring-2 focus:ringaccent/50 placeholder-text-dark text-text-main" />
+                        className="bg-background-light w-full p-3 rounded focus:outline-none focus:ring-2 focus:ringaccent/50 placeholder-text-dark text-text-main" />
                     </div>                       
 
                     <button type="submit" disabled={loading}
@@ -76,7 +94,28 @@ export default function SignupPage() {
                         {loading ? "Aguarde..." : "Cadastrar"}
                     </button>
                 </form>
+                <p className="text-center text-sm text-gray-500 mt-4">
+                    Já tem conta? <a href="/login" className="text-primary hover:underline">Fazer login</a>
+                </p>
             </div>
-        </main>
+        </div>
+
+        <div style={{ flex: 1, position: "relative", overflow: "hidden" }}>
+            <img
+                src={randomBackground.imagePath}
+                alt={randomBackground.title}
+                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
+            />
+
+            <div style={{ position: "absolute", inset: 0, backgroundColor: "rgba(0, 0, 0, 0.2)", zIndex: 1 }} />
+
+            <div className="absolute inset-0 bg-black/40" />
+            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1.5rem", background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)" }}>
+                <p style={{ color: "white", fontWeight: 600, fontSize: "1.125rem", margin: 0 }}>{randomBackground.title}</p>
+                <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.875rem", margin: 0 }}>{randomBackground.artist}</p>
+            </div>
+        </div>
+        
+    </main>
     )
 }
