@@ -1,0 +1,57 @@
+[
+    {
+        "id": 1,
+        "title": "Birds",
+        "artist": "Katsushika Hokusai",
+        "imagePath": "/arts/kh-birds.jpg"
+    },
+
+    {
+        "id": 2,
+        "title": "Birds",
+        "artist": "Katsushika Hokusai",
+        "imagePath": "/arts/kh-under-the-wave-off-kanagawa.jpg"
+    },
+
+    {
+        "id": 3,
+        "title": "Fine Wind, Clear Morning",
+        "artist": "Katsushika Hokusai",
+        "imagePath": "/arts/kh-fine-wind-clear-morning.jpg"
+    },
+
+    {
+        "id": 4,
+        "title": "Wheat Field with Cypresses",
+        "artist": "Vincent van Gogh",
+        "imagePath": "/arts/vg-wheat-field-with-cypresses.jpg"
+    },
+
+    {
+        "id": 5,
+        "title": "Stairway at Auvers",
+        "artist": "Vincent van Gogh",
+        "imagePath": "/arts/vg-stairway-at-auvers.jpg"
+    },
+
+    {
+        "id": 6,
+        "title": "The Parc Monceau",
+        "artist": "Claude Monet",
+        "imagePath": "/arts/cm-the-parc-monceau.jpg"
+    },
+
+    {
+        "id": 7,
+        "title": "The Magpie",
+        "artist": "Claude Monet",
+        "imagePath": "/arts/cm-the-magpie.jpg"
+    },
+
+    {
+        "id": 8,
+        "title": "Lady in the garden",
+        "artist": "Claude Monet",
+        "imagePath": "/arts/cm-lady-in-the-garden.jpg"
+    }            
+]
