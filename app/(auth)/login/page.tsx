@@ -61,9 +61,9 @@ export default function LoginPage() {
     return (
     <main style={{ display: "flex", minHeight: "100vh", width: "100%" }}>
         
-        <div style={{ width: "40%", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: "2rem", zIndex: 10, borderRight: "2px solid rgba(255, 255, 255, 0.15)" }}
+        <div style={{ width: "40%", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: "2rem", zIndex: 10, borderRight: "1px solid rgba(255, 255, 255, 0.15)" }}
             className="bg-background shadow-2xl">
-            <div className=" w-full max-w-md p-8 rounded-xl shadow-md">
+            <div className=" w-full max-w-md p-8 rounded-xl">
                 <h1 className="text-2xl font-bold text-center text-text-main mb-6">Entrar no MyRecord</h1>
 
                 {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm">{error}</div>}
@@ -91,20 +91,8 @@ export default function LoginPage() {
             </div>
         </div>
 
-        <div style={{ flex: 1, position: "relative", overflow: "hidden" }}>
-            <img
-                src={randomBackground.imagePath}
-                alt={randomBackground.title}
-                style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
-            />
-
-            <div style={{ position: "absolute", inset: 0, backgroundColor: "rgba(0, 0, 0, 0.2)", zIndex: 1 }} />
-
-            <div className="absolute inset-0 bg-black/40" />
-            <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1.5rem", background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)" }}>
-                <p style={{ color: "white", fontWeight: 600, fontSize: "1.125rem", margin: 0 }}>{randomBackground.title}</p>
-                <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.875rem", margin: 0 }}>{randomBackground.artist}</p>
-            </div>
+        <div className="bg-background-dark w-full flex items-center justify-center">
+            <div className=" w-full max-w-130 h-70 p-8 outline-1 outline-background-light rounded-xl bg-background"></div>
         </div>
         
     </main>

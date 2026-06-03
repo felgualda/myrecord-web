@@ -63,7 +63,7 @@ export default function SignupPage() {
         
         <div style={{ width: "40%", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: "2rem", zIndex: 10, borderRight: "2px solid rgba(255, 255, 255, 0.15)"  }}
             className="bg-background shadow-2xl">
-            <div className=" w-full max-w-md p-8 rounded-xl shadow-md">
+            <div className=" w-full max-w-md p-8 rounded-xl">
                 <h1 className="text-2xl font-bold text-center text-text-main mb-6">Criar conta</h1>
 
                 {error && <div className="bg-red-100 text-red-700 p-3 rounded mb-4 text-sm">{error}</div>}
