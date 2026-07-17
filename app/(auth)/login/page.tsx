@@ -4,11 +4,13 @@ import { use, useState, useEffect } from "react"
 import { useRouter } from "next/navigation"
 import { Art } from "@/types/art";
 import arts from "@/app/data/arts.json";
+import SongOfTheDayCard from "@/components/SongOfTheDayCard";
+import { SpotifyTrack } from "@/types/spotify";
 
 export default function LoginPage() {
     const router = useRouter();
     
-    const [randomBackground, setRandomBackground] = useState<Art | null>(null);
+    const [sotd, setSotd] = useState<SpotifyTrack | null>(null);
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -16,15 +18,30 @@ export default function LoginPage() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const index = Math.floor(Math.random() * arts.length);
+        const getSOTD = async () => {
+            try {
+                const response = await fetch(`${process.env['NEXT_PUBLIC_API_URL']}/api/spotify/sotd`, {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                });
 
-        setRandomBackground(arts[index]);
+                const data = await response.json();
+
+                if(!response.ok) {
+                    throw new Error(data.error || "Erro ao receber música do dia");
+                } else {
+                    setSotd(data);
+                }
+            } catch (err: any) {
+                console.error(err);
+            } finally {
+
+            }
+        }
+
+        getSOTD();
 
     }, []);
-
-    if (!randomBackground) {
-        return <main className="min-h-screen bg-background"></main>;
-    }
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -92,7 +109,7 @@ export default function LoginPage() {
         </div>
 
         <div className="bg-background-dark w-full flex items-center justify-center">
-            <div className=" w-full max-w-130 h-70 p-8 outline-1 outline-background-light rounded-xl bg-background"></div>
+            <SongOfTheDayCard spotifyId={sotd?.spotifyId} title={sotd?.title} artist={sotd?.artist} albumImage={sotd?.albumImage}/>
         </div>
         
     </main>

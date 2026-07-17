@@ -1,4 +1,4 @@
-import { SpotifyTrack } from "@/types/spotify"
+import { SpotifyTrack, formatArtists } from "@/types/spotify";
 import { useState } from "react";
 
 interface CreatePostModalProps {
@@ -8,23 +8,23 @@ interface CreatePostModalProps {
     loading: boolean;
 }
 
-export default function CreatePostModal({track, onClose, onConfirm, loading}: CreatePostModalProps) {
+export default function CreatePostModal({ track, onClose, onConfirm, loading }: CreatePostModalProps) {
 
     const [postText, setPostText] = useState("");
-    
+
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         onConfirm(postText);
     };
-    
+
     return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
-      
+
       <div className="bg-background-light w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
-        
+
         <div className="p-4 border-b border-gray-700/50 flex justify-between items-center">
           <h2 className="text-xl font-bold text-text-main">Criar Post</h2>
-          <button 
+          <button
             onClick={onClose}
             className="text-text-muted hover:text-white transition-colors text-xl"
           >
@@ -33,16 +33,18 @@ export default function CreatePostModal({track, onClose, onConfirm, loading}: Cr
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 flex flex-col gap-6">
-          
+
           <div className="flex items-center gap-4 bg-background p-3 rounded-xl border border-gray-700/30">
-            <img 
-              src={track.albumImage} 
-              alt={track.title} 
-              className="w-16 h-16 rounded-md object-cover shadow-md"
-            />
+            {track.album?.coverImage && (
+              <img
+                src={track.album.coverImage}
+                alt={track.title}
+                className="w-16 h-16 rounded-md object-cover shadow-md"
+              />
+            )}
             <div className="flex flex-col overflow-hidden">
               <span className="font-bold text-text-main truncate text-lg">{track.title}</span>
-              <span className="text-text-muted truncate">{track.artist}</span>
+              <span className="text-text-muted truncate">{formatArtists(track.artists)}</span>
             </div>
           </div>
 
@@ -55,7 +57,7 @@ export default function CreatePostModal({track, onClose, onConfirm, loading}: Cr
                   maxLength={150}
                   autoFocus
               />
-              
+
               <span className={`text-xs text-right ${postText.length >= 150 ? 'text-red-400' : 'text-text-muted'}`}>
                   {postText.length}/150
               </span>

@@ -24,7 +24,8 @@ export default function UserProfile() {
     const [unfollowAttempt, setUnfollowAttempt] = useState(false);
 
     const [selectedTrack, setSelectedTrack] = useState<SpotifyTrack | null>(null)
-    const [expandedPost, setExpandedPost] = useState<number | null>(null);
+    // id do post é uuid, não number
+    const [expandedPost, setExpandedPost] = useState<string | null>(null);
 
     const [posts, setPosts] = useState<FeedPost[]>([]);
     const [page, setPage] = useState(1);
@@ -174,7 +175,7 @@ export default function UserProfile() {
       fetchUserRecords(nextPage);
     };
 
-    const handlePostClick = (post_id: number) => {
+    const handlePostClick = (post_id: string) => {
       if(expandedPost === post_id) {
         setExpandedPost(null)
       } else {
@@ -280,13 +281,15 @@ export default function UserProfile() {
         {posts.map((post) => (
           <HomePostCard 
             key={post.id}
+            post_id={post.id}
             username={post.user.username} 
             nickname={post.user.nickname} 
             user_pfp={post.user.picture || ""} 
             song_title={post.song.title} 
-            song_artist={post.song.artist} 
-            song_albumImage={post.song.albumImage} 
+            song_artist={post.song.artistNames} 
+            song_albumImage={post.song.albumImage || ""} 
             song_spotifyUrl={`https://open.spotify.com/track/${post.song.spotifyId}`}
+            song_previewUrl={post.song.previewUrl}
             comment={post.comment}
             isExpanded= {(expandedPost === post.id)}
             onClickEvent={() => handlePostClick(post.id)}

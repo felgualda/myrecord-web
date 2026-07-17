@@ -4,11 +4,14 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Art } from "@/types/art";
 import arts from "@/app/data/arts.json";
+import SongOfTheDayCard from "@/components/SongOfTheDayCard";
+import { SpotifyTrack } from "@/types/spotify";
 
 export default function SignupPage() {
     const router = useRouter();
 
     const [randomBackground, setRandomBackground] = useState<Art | null>(null);
+    const [sotd, setSotd] = useState<SpotifyTrack | null>(null);
 
     const [formData, setFormData] = useState({
         username: "", nickname: "", email: "", password: ""
@@ -24,6 +27,29 @@ export default function SignupPage() {
         const index = Math.floor(Math.random() * arts.length);
 
         setRandomBackground(arts[index]);
+
+        const getSOTD = async () => {
+            try {
+                const response = await fetch(`${process.env['NEXT_PUBLIC_API_URL']}/api/spotify/sotd`, {
+                    method: "GET",
+                    headers: { "Content-Type": "application/json" },
+                });
+
+                const data = await response.json();
+
+                if(!response.ok) {
+                    throw new Error(data.error || "Erro ao receber música do dia");
+                } else {
+                    setSotd(data);
+                }
+            } catch (err: any) {
+                console.error(err);
+            } finally {
+
+            }
+        }
+
+        getSOTD();
 
     }, []);
 
@@ -107,9 +133,19 @@ export default function SignupPage() {
                 style={{ position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover" }}
             />
 
-            <div style={{ position: "absolute", inset: 0, backgroundColor: "rgba(0, 0, 0, 0.2)", zIndex: 1 }} />
+            <div style={{ position: "absolute", inset: 0, backgroundColor: "rgba(0, 0, 0, 0.5)", zIndex: 1 }} />
 
-            <div className="absolute inset-0 bg-black/40" />
+            <div className="absolute inset-0 flex items-center justify-center" style={{ zIndex: 2 }}>
+                <div className="p-4 rounded-lg">
+                    <SongOfTheDayCard 
+                        spotifyId={sotd?.spotifyId} 
+                        title={sotd?.title} 
+                        artist={sotd?.artist} 
+                        albumImage={sotd?.albumImage}
+                    />
+                </div>
+            </div>
+
             <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, padding: "1.5rem", background: "linear-gradient(to top, rgba(0,0,0,0.7), transparent)" }}>
                 <p style={{ color: "white", fontWeight: 600, fontSize: "1.125rem", margin: 0 }}>{randomBackground.title}</p>
                 <p style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.875rem", margin: 0 }}>{randomBackground.artist}</p>
