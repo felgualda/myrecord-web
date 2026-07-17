@@ -149,7 +149,7 @@ export default function HomePostCard({
                     <div className="absolute -inset-px bg-background-light z-0" />
                 )}
 
-                <div className="relative z-10 flex w-full">
+                <div className="relative z-10 flex w-full" style={{ cursor: 'pointer' }}>
                     <div className="pl-5 pt-5 pb-2 flex flex-col flex-1 pr-4">
                         <h3 className="text-text-main font-bold text-lg">{song_title}</h3>
                         <p className="text-text-muted text-sm">{song_artist}</p>

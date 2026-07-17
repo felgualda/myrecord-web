@@ -137,12 +137,7 @@ export default function SignupPage() {
 
             <div className="absolute inset-0 flex items-center justify-center" style={{ zIndex: 2 }}>
                 <div className="p-4 rounded-lg">
-                    <SongOfTheDayCard 
-                        spotifyId={sotd?.spotifyId} 
-                        title={sotd?.title} 
-                        artist={sotd?.artist} 
-                        albumImage={sotd?.albumImage}
-                    />
+                    <SongOfTheDayCard track={sotd} />
                 </div>
             </div>
 

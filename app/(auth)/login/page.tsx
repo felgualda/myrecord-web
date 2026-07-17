@@ -109,7 +109,7 @@ export default function LoginPage() {
         </div>
 
         <div className="bg-background-dark w-full flex items-center justify-center">
-            <SongOfTheDayCard spotifyId={sotd?.spotifyId} title={sotd?.title} artist={sotd?.artist} albumImage={sotd?.albumImage}/>
+            <SongOfTheDayCard track={sotd} />
         </div>
         
     </main>

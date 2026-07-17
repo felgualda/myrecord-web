@@ -145,16 +145,8 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-background">
-      <section className="relative flex bg-primary-light py-12 px-4">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl text-white mb-6">
-            Bem-vindo ao MyRecord!
-          </h1>
-        </div>
-      </section>
-
       <div className="relative w-full max-w-2xl mx-auto text-left z-50 pt-15 px-5">
-        <div className="p-[1px] rounded-full bg-linear-[65deg] from-purple-500 to-pink-500 shadow-purple-500/20 shadow-[0_0_120px_rgba(168,85,247,0.7)]">
+        <div className="p-[1px] rounded-full bg-linear-[65deg] from-purple-500 to-pink-500 shadow-purple-500/20">
           <div className="flex bg-background-light rounded-full shadow-lg overflow-hidden p-1">
             <input
               type="text"

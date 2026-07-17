@@ -25,11 +25,15 @@ export default function Header() {
         }
     };
 
+    const handleHomeClick = () => {
+      router.push("/");
+    }
+
   return (
     <header className="relative bg-background-light flex py-5 px-3">
         <button className="rounded border-1 border-background w-8 h-8 text-center text-background"> ≡ </button>
 
-      <h1 className="text-4xl md:text-xl text-white px-3">MyRecord</h1>
+      <h1 className="text-4xl md:text-xl text-white px-3" onClick={handleHomeClick} style={{ cursor: 'pointer' }}>MyRecord</h1>
       
       <nav>
 
@@ -38,6 +42,7 @@ export default function Header() {
       <button 
         onClick={handleProfileClick} 
         className="absolute top-6 right-6 md:top-2 md:right-10 transition-transform hover:scale-105"
+        style={{ cursor: 'pointer' }}
       >
         <img 
           src={profilePicture || "https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"} 
