@@ -225,7 +225,7 @@ export default function UserProfile() {
     }
 
     return (
-<main className="min-h-screen bg-background p-10">
+    <main className="min-h-screen bg-background p-10">
       <div className="max-w-2xl mx-auto flex flex-col items-center">
         
         <div className="flex flex-col items-center gap-4 w-full bg-background-light p-8 rounded-2xl border border-gray-700/50">

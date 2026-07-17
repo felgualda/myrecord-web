@@ -149,7 +149,7 @@ export default function Home() {
   return (
     <main
       ref={containerRef}
-      className="flex w-full h-screen overflow-x-auto overflow-y-hidden snap-x snap-mandatory lg:grid lg:grid-cols-[1fr_minmax(0,672px)_1fr] lg:overflow-hidden lg:snap-none bg-background hide-scrollbar"
+      className="flex w-full h-[calc(100vh-72px)] overflow-x-auto overflow-y-hidden snap-x snap-mandatory lg:grid lg:grid-cols-[1fr_minmax(0,672px)_1fr] lg:overflow-hidden lg:snap-none bg-background hide-scrollbar"
     >
       <style>{`
         @media (min-width: 1024px) and (max-width: ${BREAKPOINT_DESKTOP - 1}px) {
@@ -173,7 +173,7 @@ export default function Home() {
           className="dynamic-panel-inner w-full" 
         >
           <div className="bg-background-light p-6 rounded-xl text-text-main shadow-lg">
-            <h2 className="font-bold text-lg mb-4">Painel Esquerdo</h2>
+            <h2 className="font-bold text-lg mb-4">❔ Novo</h2>
             <p className="text-text-muted">Lado esq</p>
           </div>
         </div>
@@ -280,7 +280,7 @@ export default function Home() {
           className="dynamic-panel-inner w-full" 
         >
           <div className="bg-background-light p-6 rounded-xl text-text-main shadow-lg">
-            <h2 className="font-bold text-lg mb-4">Hot</h2>
+            <h2 className="font-bold text-lg mb-4">🔥Quente</h2>
             <p className="text-text-muted">Lado dir.</p>
           </div>
         </div>

@@ -30,7 +30,7 @@ export default function Header() {
     }
 
   return (
-    <header className="relative bg-background-light flex py-5 px-3">
+    <header className="sticky top-0 z-100 w-full bg-background-light flex py-5 px-3">
         <button className="rounded border-1 border-background w-8 h-8 text-center text-background"> ≡ </button>
 
       <h1 className="text-4xl md:text-xl text-white px-3" onClick={handleHomeClick} style={{ cursor: 'pointer' }}>MyRecord</h1>

@@ -31,3 +31,6 @@
     display: none;
   }
 }
+html, body {
+  overscroll-behavior-y: none;
+}
