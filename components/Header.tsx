@@ -128,7 +128,7 @@ export default function Header() {
         ) : (
           <button 
             onClick={handleLoginClick}
-            className="bg-linear-[65deg] from-purple-500 to-pink-500 hover:opacity-90 text-white font-semibold py-2 px-5 rounded-full transition-opacity"
+            className="flex justify-center w-25 h-10 items-center bg-primary text-white font-bold rounded hover:bg-secondary transition disabled:opacity-50"
           >
             Entrar
           </button>

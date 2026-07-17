@@ -121,7 +121,7 @@ export default function HomePostCard({
     return (
         <div id={`${post_id}`} className="py-1 px-5" style={{ containerType: 'inline-size' }}>
             <div
-                className="relative flex flex-col w-full aspect-square rounded-2xl shadow-sm overflow-hidden min-h-[5rem] transition-all duration-500 ease-in-out origin-top"
+                className="relative flex flex-col w-full aspect-square rounded-2xl shadow-sm overflow-hidden min-h-[5rem] transition-all duration-500 ease-in-out shadow-background-dark origin-top"
                 style={{
                     minHeight: '7rem',
                     maxHeight: isExpanded ? 'min(100cqw, 400px)' : '5rem'
