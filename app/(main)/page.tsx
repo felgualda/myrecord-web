@@ -90,7 +90,6 @@ export default function Home() {
         return;
       }
 
-      // Payload no novo formato: artists (array) e album (objeto)
       const payload = {
         spotifyId: selectedTrack.spotifyId,
         title: selectedTrack.title,
@@ -226,6 +225,7 @@ export default function Home() {
             song_artist={post.song.artistNames}
             song_albumImage={post.song.albumImage || ""}
             song_spotifyUrl={`https://open.spotify.com/track/${post.song.spotifyId}`}
+            song_previewUrl={post.song.previewUrl}
             comment={post.comment}
             isExpanded={expandedPost === post.id}
             onClickEvent={() => handlePostClick(post.id)}
