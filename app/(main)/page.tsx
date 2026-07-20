@@ -171,7 +171,7 @@ export default function Home() {
         <div 
           className="dynamic-panel-inner w-full" 
         >
-          <div className="bg-background border border-1 border-background-light p-6 rounded-xl text-text-main shadow-lg shadow-background-dark h-full">
+          <div className="bg-background border border-1 border-background-light p-6 rounded-xl text-text-main shadow-sm shadow-background-dark h-full">
             <h2 className="font-bold text-lg mb-4">❔ Novo</h2>
             <p className="text-text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas id faucibus arcu. Duis fringilla auctor sem. Praesent dapibus augue nunc, sed porta quam condimentum in. Cras nec tortor posuere, vulputate turpis sed, bibendum metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur efficitur lacus vitae est ultricies, ut ornare est iaculis. In sit amet sapien ac est congue feugiat nec non orci. Sed ut dolor sed diam placerat placerat ut eu magna. Nulla facilisi. Curabitur nec gravida libero. Donec sit amet justo eu urna sodales ultrices quis vel augue. Phasellus lacinia tellus at eros faucibus, at pulvinar libero suscipit. In hac habitasse platea dictumst. Quisque enim augue, ullamcorper nec arcu sit amet, pulvinar ornare ex. Praesent eget urna quam. Aenean posuere hendrerit ipsum. Nulla urna eros, dictum ut ornare non, interdum eu nisi. In hac habitasse platea dictumst. Mauris egestas enim non ullamcorper gravida. Ut in lacinia justo.</p>
           </div>
@@ -235,6 +235,16 @@ export default function Home() {
         </div>
 
         <div className="relative w-full max-w-2xl mx-auto text-left flex flex-col gap-6 px-5 pb-15">
+          
+          {loadingFeed && (
+            <div className="flex justify-center py-4">
+              <svg className="w-8 h-8 text-purple-500 animate-spin" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+            </div>
+          )}
+
           {posts.map((post) => (
             <HomePostCard
               key={post.id}
@@ -255,7 +265,7 @@ export default function Home() {
             />
           ))}
 
-          {hasMore && (
+          {hasMore && posts.length > 0 &&(
             <div className="flex justify-center mt-6">
               <button
                 onClick={handleLoadMore}
@@ -280,7 +290,7 @@ export default function Home() {
         <div 
           className="dynamic-panel-inner w-full" 
         >
-          <div className="bg-background border border-1 border-background-light p-6 rounded-xl text-text-main shadow-lg shadow-background-dark h-full">
+          <div className="bg-background border border-1 border-background-light p-6 rounded-xl text-text-main shadow-sm shadow-background-dark h-full">
             <h2 className="font-bold text-lg mb-4">🔥Quente</h2>
             <p className="text-text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas id faucibus arcu. Duis fringilla auctor sem. Praesent dapibus augue nunc, sed porta quam condimentum in. Cras nec tortor posuere, vulputate turpis sed, bibendum metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur efficitur lacus vitae est ultricies, ut ornare est iaculis. In sit amet sapien ac est congue feugiat nec non orci. Sed ut dolor sed diam placerat placerat ut eu magna. Nulla facilisi. Curabitur nec gravida libero. Donec sit amet justo eu urna sodales ultrices quis vel augue. Phasellus lacinia tellus at eros faucibus, at pulvinar libero suscipit. In hac habitasse platea dictumst. Quisque enim augue, ullamcorper nec arcu sit amet, pulvinar ornare ex. Praesent eget urna quam. Aenean posuere hendrerit ipsum. Nulla urna eros, dictum ut ornare non, interdum eu nisi. In hac habitasse platea dictumst. Mauris egestas enim non ullamcorper gravida. Ut in lacinia justo.</p>
           </div>

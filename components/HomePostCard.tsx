@@ -120,11 +120,10 @@ export default function HomePostCard({
         onClickEvent(post_id);
     };
 
-    // Estilos base para os links
     const linkBaseClass = "w-8 h-8 flex items-center justify-center rounded-full transition-all duration-300 z-30";
 
     return (
-        <div id={`${post_id}`} className="py-1 px-5" style={{ containerType: 'inline-size' }}>
+        <div id={`${post_id}`} className="py-1 px-1 lg:px-5" style={{ containerType: 'inline-size' }}>
             <div
                 className="relative flex flex-col w-full aspect-square rounded-2xl shadow-sm overflow-hidden min-h-[5rem] transition-all duration-500 ease-in-out shadow-background-dark origin-top"
                 style={{

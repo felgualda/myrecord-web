@@ -23,7 +23,7 @@ export default function CreatePostModal({ track, onClose, onConfirm, loading }: 
       <div className="bg-background-light w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-200">
 
         <div className="p-4 border-b border-gray-700/50 flex justify-between items-center">
-          <h2 className="text-xl font-bold text-text-main">Criar Post</h2>
+          <h2 className="text-xl font-bold text-text-main">Criar Record</h2>
           <button
             onClick={onClose}
             className="text-text-muted hover:text-white transition-colors text-xl"
@@ -74,7 +74,7 @@ export default function CreatePostModal({ track, onClose, onConfirm, loading }: 
             <button
               type="submit"
               disabled={loading}
-              className="px-6 py-2 rounded-full font-bold text-white bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-90 transition-opacity"
+              className={`px-6 py-2 rounded-full font-bold text-white ${loading ? 'bg-background' : 'bg-gradient-to-r from-purple-500 to-pink-500 hover:opacity-70'}`}
             >
               {loading ? "Processando..." : "Enviar"}
             </button>
