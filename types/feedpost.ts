@@ -22,5 +22,8 @@ export interface FeedPost {
     artistNames: string;
     albumImage: string | null;
     previewUrl: string | null;
+
+    deezerUrl: string | null;
+    itunesUrl: string | null;
   };
 }

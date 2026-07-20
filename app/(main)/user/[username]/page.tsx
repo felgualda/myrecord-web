@@ -290,6 +290,8 @@ export default function UserProfile() {
               song_artist={post.song.artistNames} 
               song_albumImage={post.song.albumImage || ""} 
               song_spotifyUrl={`https://open.spotify.com/track/${post.song.spotifyId}`}
+              song_deezerUrl={post.song.deezerUrl}
+              song_appleMusicUrl={post.song.itunesUrl}
               song_previewUrl={post.song.previewUrl}
               comment={post.comment}
               isExpanded={(expandedPost === post.id)}

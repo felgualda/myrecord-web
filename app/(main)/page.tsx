@@ -108,7 +108,6 @@ export default function Home() {
         spotifyId: selectedTrack.spotifyId,
         title: selectedTrack.title,
         comment: postText,
-        previewUrl: selectedTrack.previewUrl,
         artists: selectedTrack.artists,
         album: selectedTrack.album?.spotifyId ? selectedTrack.album : null,
       };
@@ -247,6 +246,8 @@ export default function Home() {
               song_artist={post.song.artistNames}
               song_albumImage={post.song.albumImage || ""}
               song_spotifyUrl={`https://open.spotify.com/track/${post.song.spotifyId}`}
+              song_deezerUrl={post.song.deezerUrl}
+              song_appleMusicUrl={post.song.itunesUrl}
               song_previewUrl={post.song.previewUrl}
               comment={post.comment}
               isExpanded={expandedPost === post.id}

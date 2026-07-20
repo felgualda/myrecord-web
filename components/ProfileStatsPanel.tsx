@@ -6,13 +6,10 @@ interface ProfileStatsPanelProps {
 }
 
 export default function ProfileStatsPanel({ recordsCount = 0, averageRank = null }: ProfileStatsPanelProps) {
-  // Mantive a sua lógica de divisão e arredondamento
   const rank = averageRank !== null ? Math.round(averageRank / 10000) : 0;
   
-  // O ponteiro gira de 0 a 180 graus
   const rotation = (rank / 100) * 180;
 
-  // Determinar a categoria baseada no rank
   let category = "Sem dados";
   let categoryColor = "text-gray-400";
 
@@ -39,7 +36,6 @@ export default function ProfileStatsPanel({ recordsCount = 0, averageRank = null
       <div className="flex flex-col items-center">
         {/*<span className="text-sm text-gray-400 font-medium uppercase tracking-wider mb-4">Medidor de Perfil</span>*/}
         
-        {/* Velocímetro em SVG */}
         <div className="relative w-full max-w-[240px] aspect-[2/1] overflow-hidden">
           <svg viewBox="0 0 200 110" className="w-full h-full overflow-visible drop-shadow-md">
             {/* Zona Underground (0 - 33) */}
