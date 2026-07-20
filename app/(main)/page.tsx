@@ -168,7 +168,7 @@ export default function Home() {
       `}</style>
 
       {/* PAINEL ESQUERDO */}
-      <aside className="dynamic-side-panel w-full h-full flex-shrink-0 snap-center snap-always overflow-y-auto py-15 px-5 hide-scrollbar lg:pl-10 lg:flex lg:w-auto lg:justify-center lg:px-0 lg:pt-[11.25rem]">
+      <aside className="dynamic-side-panel w-full h-full flex-shrink-0 snap-center snap-always overflow-y-auto py-15 px-5 hide-scrollbar lg:pl-10 lg:flex lg:w-auto lg:justify-center lg:px-0 pt-25 lg:pt-[11.25rem]">
         <div 
           className="dynamic-panel-inner w-full" 
         >
@@ -184,7 +184,7 @@ export default function Home() {
         ref={centerPanelRef}
         className="relative w-full h-full flex-shrink-0 snap-center snap-always overflow-y-auto lg:w-auto lg:col-start-2 hide-scrollbar"
       >
-        <div className="sticky top-0 w-full z-50 bg-background pt-15 pb-15 px-5">
+        <div className="sticky top-0 w-full z-50 bg-background pt-30 lg:pt-15 pb-15 px-5">
           <div className="relative w-full max-w-2xl mx-auto text-left">
             <div className="p-[1px] rounded-full bg-linear-[65deg] from-purple-500 to-pink-500 shadow-purple-500/20">
               <div className="flex bg-background-light rounded-full shadow-lg overflow-hidden p-1">
@@ -275,7 +275,7 @@ export default function Home() {
       </section>
 
       {/* PAINEL DIREITO */}
-      <aside className="dynamic-side-panel w-full h-full flex-shrink-0 snap-center snap-always overflow-y-auto py-15 px-5 hide-scrollbar lg:flex lg:pr-10 lg:w-auto lg:justify-center lg:px-0 lg:pt-[11.25rem]">
+      <aside className="dynamic-side-panel w-full h-full flex-shrink-0 snap-center snap-always overflow-y-auto py-15 px-5 hide-scrollbar lg:flex lg:pr-10 lg:w-auto lg:justify-center lg:px-0 lg:pt-[11.25rem] pt-25">
         <div 
           className="dynamic-panel-inner w-full" 
         >

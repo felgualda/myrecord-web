@@ -29,7 +29,7 @@ export default function RootLayout({
         <body>
             <AudioSettingsProvider>
                 <div className="relative flex flex-col min-h-screen">
-                  <Header />
+                  <Header/>
                   {children}
                 </div>
             </AudioSettingsProvider>
