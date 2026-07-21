@@ -6,6 +6,7 @@ import { SpotifyTrack, formatArtists } from "@/types/spotify";
 import CreatePostModal from "@/components/CreatePostModal";
 import { FeedPost } from "@/types/feedpost";
 import { useRouter } from "next/navigation";
+import RecommendedProfileCard from "@/components/RecommendProfileCard";
 
 
 const MIN_PANEL_WIDTH = 300; 
@@ -172,8 +173,9 @@ export default function Home() {
           className="dynamic-panel-inner w-full" 
         >
           <div className="bg-background border border-1 border-background-light p-6 rounded-xl text-text-main shadow-sm shadow-background-dark h-full">
-            <h2 className="font-bold text-lg mb-4">❔ Novo</h2>
-            <p className="text-text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas id faucibus arcu. Duis fringilla auctor sem. Praesent dapibus augue nunc, sed porta quam condimentum in. Cras nec tortor posuere, vulputate turpis sed, bibendum metus. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Curabitur efficitur lacus vitae est ultricies, ut ornare est iaculis. In sit amet sapien ac est congue feugiat nec non orci. Sed ut dolor sed diam placerat placerat ut eu magna. Nulla facilisi. Curabitur nec gravida libero. Donec sit amet justo eu urna sodales ultrices quis vel augue. Phasellus lacinia tellus at eros faucibus, at pulvinar libero suscipit. In hac habitasse platea dictumst. Quisque enim augue, ullamcorper nec arcu sit amet, pulvinar ornare ex. Praesent eget urna quam. Aenean posuere hendrerit ipsum. Nulla urna eros, dictum ut ornare non, interdum eu nisi. In hac habitasse platea dictumst. Mauris egestas enim non ullamcorper gravida. Ut in lacinia justo.</p>
+            <h2 className="font-bold text-lg mb-4">❔ Usuários</h2>
+            <RecommendedProfileCard username="teste" nickname="Teste da Silva" pfp_url="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg" records_today={5}/>
+            <RecommendedProfileCard username="teste" nickname="Teste da Silva" pfp_url="https://upload.wikimedia.org/wikipedia/commons/a/ac/Default_pfp.jpg" records_today={5}/>
           </div>
         </div>
       </aside>
